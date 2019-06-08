@@ -22,6 +22,9 @@
 #endif
 #endif
 
+#define CONFIG_USB_DEVICE 1
+#define CONFIG_USBD_HS 1
+
 #define is_mx6ull_9x9_evk()	CONFIG_IS_ENABLED(TARGET_MX6ULL_9X9_EVK)
 
 #ifdef CONFIG_TARGET_MX6ULL_9X9_EVK
@@ -87,6 +90,9 @@
 
 #define CONFIG_MFG_ENV_SETTINGS \
 	CONFIG_MFG_ENV_SETTINGS_DEFAULT \
+    "ethaddr=3e:65:d6:9e:64:dd\0" \
+    "usbnet_devaddr=3e:65:d6:9e:64:dd\0" \
+    "usbnet_hostaddr=72:8d:1f:c4:e8:ca\0" \
 	"initrd_addr=0x83800000\0" \
 	"initrd_high=0xffffffff\0" \
 	"emmc_dev=1\0"\

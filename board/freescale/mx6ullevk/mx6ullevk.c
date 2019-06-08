@@ -27,6 +27,9 @@
 #include <power/pmic.h>
 #include <power/pfuze3000_pmic.h>
 #include "../common/pfuze.h"
+#include <net.h>
+#include <g_dnl.h>
+#include <usb.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -515,6 +518,37 @@ int board_late_init(void)
 	set_wdog_reset((struct wdog_regs *)WDOG1_BASE_ADDR);
 
 	return 0;
+}
+
+int board_eth_init(bd_t *bis)
+{
+    int ret = 0;
+#ifdef CONFIG_USB_ETHER
+    printf("Calling usb_ether_init\n");
+	ret = board_usb_init(0, USB_INIT_DEVICE);
+	if (ret) {
+		pr_err("USB init failed: %d", ret);
+		return CMD_RET_FAILURE;
+	}
+
+	//g_dnl_clear_detach();
+	//ret = g_dnl_register("usb_ether");
+	//if (ret)
+		//return ret;
+
+	if (!g_dnl_board_usb_cable_connected()) {
+		puts("\rUSB cable not detected.\n" \
+		     "Command exit.\n");
+		ret = CMD_RET_FAILURE;
+		goto exit;
+	}
+    usb_eth_initialize(bis);
+#else
+    printf("SKIPPING usb_ether_init\n");
+#endif
+
+exit:
+	return ret;
 }
 
 int checkboard(void)

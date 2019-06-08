@@ -26,7 +26,6 @@
                 MFG_BOOT_CMD "${loadaddr} ${initrd_addr} ${fdt_addr}; " \
             "fi; " \
         "else " \
-            "echo \"Run fastboot ...\"; fastboot 0; "  \
         "fi;\0" \
 
 #endif
