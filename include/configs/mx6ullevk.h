@@ -22,9 +22,6 @@
 #endif
 #endif
 
-#define CONFIG_USB_DEVICE 1
-#define CONFIG_USBD_HS 1
-
 #define is_mx6ull_9x9_evk()	CONFIG_IS_ENABLED(TARGET_MX6ULL_9X9_EVK)
 
 #ifdef CONFIG_TARGET_MX6ULL_9X9_EVK
@@ -93,6 +90,9 @@
     "ethaddr=3e:65:d6:9e:64:dd\0" \
     "usbnet_devaddr=3e:65:d6:9e:64:dd\0" \
     "usbnet_hostaddr=72:8d:1f:c4:e8:ca\0" \
+    "ipaddr=192.168.42.2\0" \
+    "serverip=192.168.42.1\0" \
+    "ethact=usb_ether\0" \
 	"initrd_addr=0x83800000\0" \
 	"initrd_high=0xffffffff\0" \
 	"emmc_dev=1\0"\
@@ -213,7 +213,18 @@
 					"echo WARNING: Could not determine dtb to use; " \
 				"fi; " \
 			"fi;\0" \
+    "nfs_root=root\0" \
+    "bootnfs=run args_nfs;" \
+             "run init_script;" \
+             "nfs ${loadaddr} ${serverip}:/srv/nfs/${nfs_root}/kernel/uImage.imx;" \
+             "nfs ${fdt_addr} ${serverip}:/srv/nfs/${nfs_root}/kernel/fdt.imx;" \
+             "bootz ${loadaddr} - ${fdt_addr}\0" \
+    "args_nfs=setenv bootargs console=${console},${baudrate} rw root=/dev/nfs nfsroot=${serverip}:/srv/nfs/${nfs_root} ip=${ipaddr} g_ether.host_addr=${usbnet_hostaddr} g_ether.dev_addr=${usbnet_devaddr}\0" \
+    "init_script=\0" \
 
+#define CONFIG_BOOTCOMMAND "run bootnfs"
+
+#if 0
 #define CONFIG_BOOTCOMMAND \
 	   "run findfdt;" \
 	   "mmc dev ${mmcdev};" \
@@ -227,6 +238,7 @@
 			   "fi; " \
 		   "fi; " \
 	   "else run netboot; fi"
+#endif
 #endif
 
 /* Miscellaneous configurable options */

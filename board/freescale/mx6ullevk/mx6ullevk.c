@@ -531,11 +531,6 @@ int board_eth_init(bd_t *bis)
 		return CMD_RET_FAILURE;
 	}
 
-	//g_dnl_clear_detach();
-	//ret = g_dnl_register("usb_ether");
-	//if (ret)
-		//return ret;
-
 	if (!g_dnl_board_usb_cable_connected()) {
 		puts("\rUSB cable not detected.\n" \
 		     "Command exit.\n");
