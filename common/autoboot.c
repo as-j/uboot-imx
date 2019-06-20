@@ -312,6 +312,7 @@ const char *bootdelay_process(void)
 	bootdelay = s ? (int)simple_strtol(s, NULL, 10) : CONFIG_BOOTDELAY;
 
 #if defined(is_boot_from_usb)
+    /*
 	if (is_boot_from_usb() && env_get("bootcmd_mfg")) {
 		disconnect_from_pc();
 		printf("Boot from USB for mfgtools\n");
@@ -324,6 +325,7 @@ const char *bootdelay_process(void)
 	} else {
 		printf("Normal Boot\n");
 	}
+    */
 #endif
 
 #ifdef CONFIG_OF_CONTROL

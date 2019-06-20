@@ -86,7 +86,7 @@
 #define CONFIG_FASTBOOT_USB_DEV 0
 
 #define CONFIG_MFG_ENV_SETTINGS \
-	CONFIG_MFG_ENV_SETTINGS_DEFAULT \
+    CONFIG_MFG_ENV_SETTINGS_DEFAULT \
     "ethaddr=3e:65:d6:9e:64:dd\0" \
     "usbnet_devaddr=3e:65:d6:9e:64:dd\0" \
     "usbnet_hostaddr=72:8d:1f:c4:e8:ca\0" \
